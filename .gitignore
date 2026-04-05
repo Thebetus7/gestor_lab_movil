@@ -1,0 +1,63 @@
+# ─── Flutter / Dart ──────────────────────────────────────────────────────────
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+
+# ─── Build ────────────────────────────────────────────────────────────────────
+build/
+*.apk
+*.aab
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# ─── Dart análisis y caché ────────────────────────────────────────────────────
+*.dart.snapshot
+.pub-cache/
+.pub/
+
+# ─── Plataformas específicas ──────────────────────────────────────────────────
+# Android
+android/local.properties
+android/.gradle/
+android/key.properties
+*.keystore
+*.jks
+
+# iOS
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+
+# macOS
+macos/Pods/
+macos/.symlinks/
+
+# Windows
+windows/flutter/ephemeral/
+
+# Linux
+linux/flutter/ephemeral/
+
+# Web
+web/favicon.png
+
+# ─── Variables de entorno ─────────────────────────────────────────────────────
+.env
+.env.local
+*.env
+
+# ─── IDEs y editores ──────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.iml
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ─── Sistema operativo ────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
