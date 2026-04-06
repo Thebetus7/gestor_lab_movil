@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'presentation/state/auth_provider.dart';
+import 'presentation/state/laboratorio_provider.dart';
 import 'presentation/pages/auth/login_page.dart';
 import 'presentation/pages/dashboard/dashboard_page.dart';
 
@@ -9,6 +10,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => LaboratorioProvider()),
       ],
       child: const GestorLabApp(),
     ),

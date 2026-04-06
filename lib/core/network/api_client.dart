@@ -41,6 +41,18 @@ class ApiClient {
     }
   }
 
+  Future<ApiResponse> patch(String url, {Map<String, dynamic>? body}) async {
+    try {
+      final headers = await _getHeaders();
+      final response = await _client
+          .patch(Uri.parse(url), headers: headers, body: jsonEncode(body))
+          .timeout(_timeout);
+      return _handleResponse(response);
+    } catch (e) {
+      throw NetworkException('Error de red');
+    }
+  }
+
   ApiResponse _handleResponse(http.Response response) {
     final statusCode = response.statusCode;
     final body = response.body.isNotEmpty ? jsonDecode(response.body) : null;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../state/auth_provider.dart';
 import '../auth/login_page.dart';
+import 'actividades_view.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -49,37 +50,47 @@ class _DashboardPageState extends State<DashboardPage> {
           )
         ],
       ),
-      body: Center(
-        child: auth.profile == null
-            ? const CircularProgressIndicator(color: Colors.black)
-            : Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(24.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black, width: 1.5),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.account_circle_outlined, size: 64, color: Colors.black),
-                      const SizedBox(height: 16),
-                      Text(
-                        'HOLA, ${auth.profile!['username'].toString().toUpperCase()}',
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+      body: auth.profile == null
+          ? const Center(child: CircularProgressIndicator(color: Colors.black))
+          : IndexedStack(
+              index: _currentIndex,
+              children: [
+                // INDEX 0: HOME
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(24.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.black, width: 1.5),
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'ROLES: ${auth.profile!['roles']?.join(', ') ?? 'Ninguno'}',
-                        style: const TextStyle(color: Colors.black54),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.account_circle_outlined, size: 64, color: Colors.black),
+                          const SizedBox(height: 16),
+                          Text(
+                            'HOLA, ${auth.profile!['username'].toString().toUpperCase()}',
+                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'ROLES: ${auth.profile!['roles']?.join(', ') ?? 'Ninguno'}',
+                            style: const TextStyle(color: Colors.black54),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-      ),
+                // INDEX 1: ACTIVIDADES (SCIENCE)
+                const ActividadesView(),
+                // INDEX 2: PERSON (Próximamente / Lo mismo que home o ajustes)
+                const Center(child: Text('Ajustes del Auxiliar')),
+              ],
+            ),
       // Barra de navegación flotante estilo cápsula
       bottomNavigationBar: SafeArea(
         child: Container(
