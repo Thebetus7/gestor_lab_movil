@@ -17,4 +17,8 @@ class AuthApi {
   Future<ApiResponse> getProfile() {
     return _client.get(ApiConstants.profile);
   }
+
+  Future<bool> pingConnection() {
+    return _client.ping(ApiConstants.baseUrl);
+  }
 }

@@ -18,4 +18,8 @@ class LaboratorioApi {
   Future<ApiResponse> updateActividadTarea(int id, Map<String, dynamic> data) {
     return _client.patch('${ApiConstants.actividadTareas}$id/', body: data);
   }
+
+  Future<ApiResponse> getLaboratorios() {
+    return _client.get(ApiConstants.laboratorios);
+  }
 }

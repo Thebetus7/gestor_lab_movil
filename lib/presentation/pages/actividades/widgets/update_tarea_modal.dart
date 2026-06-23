@@ -69,7 +69,7 @@ class _UpdateTareaModalState extends State<UpdateTareaModal> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Text(
-            'Verificar Tarea',
+            'Detalles',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),

@@ -8,20 +8,48 @@ class AuthProvider extends ChangeNotifier {
   String? _error;
   bool _isAuthenticated = false;
   Map<String, dynamic>? _profile;
+  bool _isCheckingAuth = true;
+  bool _isConnected = false;
+  bool _isCheckingConnection = false;
 
   bool get isLoading => _isLoading;
   String? get error => _error;
   bool get isAuthenticated => _isAuthenticated;
   Map<String, dynamic>? get profile => _profile;
+  bool get isCheckingAuth => _isCheckingAuth;
+  bool get isConnected => _isConnected;
+  bool get isCheckingConnection => _isCheckingConnection;
 
   AuthProvider() {
     _checkAuth();
+    checkConnection();
   }
 
   Future<void> _checkAuth() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (prefs.getString('access_token') != null) {
-      _isAuthenticated = true;
+    _isCheckingAuth = true;
+    notifyListeners();
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (prefs.getString('access_token') != null) {
+        _isAuthenticated = true;
+      }
+    } catch (e) {
+      _isAuthenticated = false;
+    } finally {
+      _isCheckingAuth = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> checkConnection() async {
+    _isCheckingConnection = true;
+    notifyListeners();
+    try {
+      _isConnected = await _authRepository.checkConnection();
+    } catch (e) {
+      _isConnected = false;
+    } finally {
+      _isCheckingConnection = false;
       notifyListeners();
     }
   }

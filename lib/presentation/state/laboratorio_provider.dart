@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import '../../data/models/actividad_model.dart';
+import '../../data/models/laboratorio_model.dart';
 import '../../data/repositories/laboratorio_repository.dart';
+import '../../data/repositories/incidencia_repository.dart';
 
 class LaboratorioProvider extends ChangeNotifier {
   final LaboratorioRepository _repo = LaboratorioRepository();
+  final IncidenciaRepository _incidenciaRepo = IncidenciaRepository();
   
   List<ActividadModel> _actividades = [];
+  List<LaboratorioModel> _laboratorios = [];
   bool _isLoading = false;
   String? _error;
 
   ActividadModel? _currentActividad;
 
   List<ActividadModel> get actividades => _actividades;
+  List<LaboratorioModel> get laboratorios => _laboratorios;
   bool get isLoading => _isLoading;
   String? get error => _error;
   ActividadModel? get currentActividad => _currentActividad;
@@ -23,6 +28,21 @@ class LaboratorioProvider extends ChangeNotifier {
 
     try {
       _actividades = await _repo.getActividades();
+    } catch (e) {
+      _error = e.toString();
+    }
+
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> loadLaboratorios() async {
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+
+    try {
+      _laboratorios = await _repo.getLaboratorios();
     } catch (e) {
       _error = e.toString();
     }
@@ -57,6 +77,24 @@ class LaboratorioProvider extends ChangeNotifier {
       if (_currentActividad != null) {
         _currentActividad = await _repo.getActividadDetail(_currentActividad!.id);
       }
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _error = e.toString();
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> reportarIncidencia(String descripcion, String prioridad, int? idLab, int? idAccesorio) async {
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+
+    try {
+      await _incidenciaRepo.reportarIncidencia(descripcion, prioridad, idLab, idAccesorio);
       _isLoading = false;
       notifyListeners();
       return true;

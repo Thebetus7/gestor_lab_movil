@@ -47,7 +47,7 @@ class _ActividadDetailPageState extends State<ActividadDetailPage> {
         elevation: 0,
         centerTitle: true,
         title: const Text(
-          'DETALLE DE ACTIVIDAD',
+          'DETALLE',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, letterSpacing: 1),
         ),
       ),
@@ -65,10 +65,30 @@ class _ActividadDetailPageState extends State<ActividadDetailPage> {
                         style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
-                      Text(
-                        'ID de la Actividad: #${actividad.id}',
-                        style: const TextStyle(color: Colors.black54),
-                      ),
+                      if (actividad.laboratorios != null && actividad.laboratorios!.isNotEmpty) ...[
+                        const SizedBox(height: 12),
+                        const Text(
+                          'LABORATORIOS ASIGNADOS',
+                          style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.black54, letterSpacing: 1.2),
+                        ),
+                        const SizedBox(height: 6),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 4,
+                          children: actividad.laboratorios!.map((lab) {
+                            return Chip(
+                              visualDensity: VisualDensity.compact,
+                              backgroundColor: Colors.white,
+                              side: BorderSide(color: Colors.grey.shade300, width: 1.2),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                              label: Text(
+                                lab.nombre.toUpperCase(),
+                                style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.black87),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ],
                       const Divider(color: Colors.black, thickness: 1.5, height: 32),
                       const Text(
                         'TAREAS ASIGNADAS',

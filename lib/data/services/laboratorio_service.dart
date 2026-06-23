@@ -1,6 +1,7 @@
 import '../../core/api/laboratorio_api.dart';
 import '../../core/network/api_client.dart';
 import '../models/actividad_model.dart';
+import '../models/laboratorio_model.dart';
 
 class LaboratorioService {
   final LaboratorioApi _laboratorioApi;
@@ -23,5 +24,11 @@ class LaboratorioService {
       'estado': estado,
       'observacion': observacion,
     });
+  }
+
+  Future<List<LaboratorioModel>> getLaboratorios() async {
+    final response = await _laboratorioApi.getLaboratorios();
+    final List<dynamic> data = response.data as List<dynamic>;
+    return data.map((json) => LaboratorioModel.fromJson(json)).toList();
   }
 }

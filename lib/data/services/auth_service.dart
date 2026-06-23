@@ -28,4 +28,8 @@ class AuthService {
     await prefs.remove('access_token');
     await prefs.remove('refresh_token');
   }
+
+  Future<bool> checkConnection() async {
+    return await _authApi.pingConnection();
+  }
 }

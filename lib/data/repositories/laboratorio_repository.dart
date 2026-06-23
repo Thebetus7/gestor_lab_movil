@@ -1,4 +1,5 @@
 import '../models/actividad_model.dart';
+import '../models/laboratorio_model.dart';
 import '../services/laboratorio_service.dart';
 
 class LaboratorioRepository {
@@ -14,5 +15,9 @@ class LaboratorioRepository {
 
   Future<void> updateActividadTarea(int id, String estado, String observacion) async {
     await _service.updateActividadTarea(id, estado, observacion);
+  }
+
+  Future<List<LaboratorioModel>> getLaboratorios() async {
+    return await _service.getLaboratorios();
   }
 }

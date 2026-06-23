@@ -23,4 +23,12 @@ class AuthRepository {
   Future<void> logout() async {
     await _authService.logout();
   }
+
+  Future<bool> checkConnection() async {
+    try {
+      return await _authService.checkConnection();
+    } catch (e) {
+      return false;
+    }
+  }
 }

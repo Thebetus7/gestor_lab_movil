@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'presentation/state/auth_provider.dart';
 import 'presentation/state/laboratorio_provider.dart';
+import 'presentation/state/reserva_provider.dart';
 import 'presentation/pages/auth/login_page.dart';
-import 'presentation/pages/dashboard/dashboard_page.dart';
+import 'presentation/pages/dashboard_page.dart';
 
 void main() {
   runApp(
@@ -11,6 +12,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => LaboratorioProvider()),
+        ChangeNotifierProvider(create: (_) => ReservaProvider()),
       ],
       child: const GestorLabApp(),
     ),
@@ -31,6 +33,14 @@ class GestorLabApp extends StatelessWidget {
       ),
       home: Consumer<AuthProvider>(
         builder: (context, auth, _) {
+          if (auth.isCheckingAuth) {
+            return const Scaffold(
+              backgroundColor: Colors.white,
+              body: Center(
+                child: CircularProgressIndicator(color: Colors.black),
+              ),
+            );
+          }
           if (auth.isAuthenticated) {
             return const DashboardPage();
           }

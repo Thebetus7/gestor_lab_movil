@@ -55,12 +55,29 @@ class ApiClient {
 
   ApiResponse _handleResponse(http.Response response) {
     final statusCode = response.statusCode;
-    final body = response.body.isNotEmpty ? jsonDecode(response.body) : null;
+    dynamic body;
+    if (response.body.isNotEmpty) {
+      try {
+        body = jsonDecode(response.body);
+      } catch (_) {
+        body = null;
+      }
+    }
 
     if (statusCode >= 200 && statusCode < 300) {
       return ApiResponse(success: true, data: body, statusCode: statusCode);
     }
     if (statusCode == 401) throw UnauthorizedException('Sesión expirada');
     throw ApiException('Error ($statusCode)', statusCode: statusCode);
+  }
+
+  Future<bool> ping(String url) async {
+    try {
+      final uri = Uri.parse(url);
+      await _client.get(uri).timeout(const Duration(seconds: 4));
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }
