@@ -1,6 +1,6 @@
 class ApiConstants {
-  // Use localhost in dev, 10.0.2.2 for Android emulator, or your local Wi-Fi IP (192.168.1.100) for physical devices
-  static const String baseUrl = 'http://10.0.2.2:8000/api';
+  // AWS: Docker mapea puerto 80 del servidor → 8000 del contenedor (no uses :8000 desde fuera)
+  static const String baseUrl = 'http://18.221.224.13/api';
 
   static const String login = '$baseUrl/usuarios/login/';
   static const String profile = '$baseUrl/usuarios/perfil/';
